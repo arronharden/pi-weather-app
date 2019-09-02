@@ -1,4 +1,4 @@
-const appConfig = require('../config/app-config.json')
+const appConfig = require('../config')
 const postgresClient = require('../persistence/postgres-client')
 const Twitter = require('twitter')
 
@@ -7,7 +7,8 @@ let client
 
 module.exports.init = function () {
   if (!appConfig.twitter) {
-    return Promise.reject(new Error('No Twitter configuration defined'))
+    console.warn('No Twitter configuration defined')
+    return
   }
   client = new Twitter({
     consumer_key: appConfig.twitter.consumerKey,
@@ -27,7 +28,7 @@ function _sendDigest () {
     data.rows.forEach(row => {
       const t = (row.temperature !== null ? parseFloat(row.temperature).toFixed(2) + 'C' : 'n/a')
       const h = (row.humidity !== null ? parseFloat(row.humidity).toFixed(2) + '%' : 'n/a')
-      const p = (row.pressure !== null ? parseFloat(row.pressure).toFixed(2) + 'hPA' : 'n/a')
+      const p = (row.pressure !== null ? parseFloat(row.pressure).toFixed(2) + 'hPa' : 'n/a')
       content += `\n${row.alias} temp=${t} h=${h} p=${p}`
     })
     client.post('statuses/update', { status: content }, function (err, tweet, response) {

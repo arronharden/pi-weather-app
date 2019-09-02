@@ -6,6 +6,8 @@ var measurementsRouter = require('./routes/measurements')
 var postgresClient = require('./persistence/postgres-client')
 const twitterDigest = require('./digests/twitter-digest')
 
+console.log(`Process starting with PID=${process.pid} and APP_CONFIG=${process.env.APP_CONFIG}`)
+
 postgresClient.init()
 twitterDigest.init()
 

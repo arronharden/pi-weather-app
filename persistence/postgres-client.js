@@ -1,5 +1,5 @@
 const { Pool } = require('pg')
-const appConfig = require('../config/app-config.json')
+const appConfig = require('../config')
 
 const SELECT_ALIASES = `SELECT distinct(alias) FROM ${appConfig.postgres.tableName} ORDER BY alias`
 const SELECT_DATA = `SELECT * FROM ${appConfig.postgres.tableName}`

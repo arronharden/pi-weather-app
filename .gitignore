@@ -21,4 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-config/app-config.json
+
+# app configs
+!config/app-config-template.json
+config/app-config*.json
+
+# app logs
+pw_app.log
