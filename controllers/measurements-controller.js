@@ -28,7 +28,7 @@ module.exports.getMostRecentMeasurements = function (req) {
   if (!req.user || !req.user.scope || !('pi-weather-app.read' in req.user.scope)) {
     // throw Object.assign(new Error('Not authorised to get measurements'), { status: 403 })
   }
-  return postgresClient.readMostRecentData()
+  return postgresClient.readMostRecentData(req.query.alias)
     .then((result) => {
       return {
         body: result.rows

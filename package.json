@@ -21,13 +21,14 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-standard": "^4.0.0",
-    "pm2": "^3.5.1"
+    "pm2": "^3.5.1",
+    "recharts": "^1.7.1"
   },
   "scripts": {
-    "start": "./node_modules/pm2/bin/pm2 start ./ecosystem.config.js",
-    "start_mock": "./node_modules/pm2/bin/pm2 start ./ecosystem.config.js --env mock",
+    "start": "pm2 start ./ecosystem.config.js",
+    "start_mock": "pm2 start ./ecosystem.config.js --env mock",
     "start_ui_dev": "react-scripts start",
-    "stop": "./node_modules/pm2/bin/pm2 stop pi-weather-app",
+    "stop": "pm2 stop pi-weather-app",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
