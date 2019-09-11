@@ -19,7 +19,7 @@ module.exports.getMeasurements = function (req) {
   return postgresClient.readData(req.query.fromDate, req.query.toDate, req.query.alias)
     .then((result) => {
       return {
-        body: result.rows
+        body: _mapPostgresResults(result.rows)
       }
     })
 }
@@ -31,7 +31,17 @@ module.exports.getMostRecentMeasurements = function (req) {
   return postgresClient.readMostRecentData(req.query.alias)
     .then((result) => {
       return {
-        body: result.rows
+        body: _mapPostgresResults(result.rows)
       }
     })
+}
+
+function _mapPostgresResults(rows) {
+  return rows.map((item) => {
+    return Object.assign({}, item, {
+      temperature: (item.temperature ? parseFloat(item.temperature) : null),  
+      humidity: (item.humidity ? parseFloat(item.humidity) : null),
+      pressure: (item.pressure ? parseFloat(item.pressure) : null)
+    })
+  })
 }

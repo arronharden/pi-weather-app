@@ -67,7 +67,7 @@ module.exports.readData = function (fromDate, toDate, alias) {
   addClause('timestamp >=', fromDate)
   addClause('timestamp <=', toDate)
   addClause('alias =', alias)
-  query += ' ORDER BY timestamp DESC'
+  query += ' ORDER BY timestamp ASC'
 
   console.debug(`Executing postgres query. query=[${query}] params=${JSON.stringify(params)}`)
   return pool.query(query, params)
