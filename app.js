@@ -1,12 +1,12 @@
 var express = require('express')
 var path = require('path')
 
-var measurementsRouter = require('./routes/measurements')
-// var cognitoAuth = require('./lib/cognito-auth')
-var postgresClient = require('./persistence/postgres-client')
-const twitterDigest = require('./digests/twitter-digest')
+var measurementsRouter = require('./server/routes/measurements')
+// var cognitoAuth = require('./server//lib/cognito-auth')
+var postgresClient = require('./server/persistence/postgres-client')
+const twitterDigest = require('./server/digests/twitter-digest')
 
-console.log(`Process starting with PID=${process.pid} and APP_CONFIG=${process.env.APP_CONFIG}`)
+console.log(`Process starting with PID=${process.pid}, APP_CONFIG=${process.env.APP_CONFIG}, NODE_ENV=${process.env.NODE_ENV}`)
 
 postgresClient.init()
 twitterDigest.init()

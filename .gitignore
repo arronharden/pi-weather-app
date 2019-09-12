@@ -23,8 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # app configs
-!config/app-config-template.json
-config/app-config*.json
+!server/config/app-config-template.json
+server/config/app-config*.json
 
 # app logs
 pw_app.log
