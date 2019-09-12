@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import './Sensor.css'
-import LatestMeasurement from '../LatestMeasurement'
+import MeasurementSummary from '../MeasurementSummary'
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
@@ -22,60 +22,51 @@ class Sensor extends React.Component {
     return d.toLocaleTimeString()
   }
 
-  render () {
-    let chartTemp, chartPressure, chartHumidity;
-    if(this.state && this.state.data && this.state.data.length > 0) {
-      if(this.state.data[0].temperature) {
-        // temp chart
-        chartTemp = (<div className="chart">
-          <LineChart width={500} height={300} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} data={this.state.data}>
-            <XAxis dataKey="timestamp" tickFormatter={this._tickFormat} />
-            <YAxis label="°C"/>
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-            <Line type="basis" dataKey="temperature" stroke="#8884d8" dot={false}/>
-            <Tooltip/>
-          </LineChart>
-        </div>)
-      }
-      if(this.state.data[0].pressure) {
-        // pressure chart
-        chartPressure = (<div className="chart">
-          <LineChart width={500} height={300} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} data={this.state.data}>
-            <XAxis dataKey="timestamp" tickFormatter={this._tickFormat} />
-            <YAxis label="hPa"/>
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-            <Line type="basis" dataKey="pressure" stroke="#8884d8" dot={false}/>
-            <Tooltip/>
-          </LineChart>
-        </div>)
-      }
-      if(this.state.data[0].humidity) {
-        // humidity chart
-        chartHumidity = (<div className="chart">
-          <LineChart width={500} height={300} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} data={this.state.data}>
-            <XAxis dataKey="timestamp" tickFormatter={this._tickFormat} />
-            <YAxis label="%" domain={[0, 100]}/>
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-            <Line type="basis" dataKey="humidity" stroke="#8884d8" dot={false}/>
-            <Tooltip/>
-          </LineChart>
-        </div>)
-      }
+  _renderMeasurement(name, unitsLabel) {
+    let result = {}
+    if(this.props && this.props.latest && this.props.latest.hasOwnProperty(name) && this.props.latest[name] !== null) {
+      result.summary = Object.assign({}, result.summary, { latest: this.props.latest[name] })
     }
+    if(this.state && this.state.data && this.state.data.length > 0 && this.state.data[0][name]) {
+      // build chart
+      result.chart = (<div className="chart">
+        <LineChart width={500} height={300} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} data={this.state.data}>
+          <XAxis dataKey="timestamp" tickFormatter={this._tickFormat} />
+          <YAxis label={unitsLabel}/>
+          <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+          <Line type="basis" dataKey={name} stroke="#8884d8" dot={false}/>
+          <Tooltip/>
+        </LineChart>
+      </div>)
+      const values = this.state.data.map((item) => item[name])
+      result.summary = Object.assign({}, result.summary, { 
+        minimum: Math.min(...values),
+        maximum: Math.max(...values)
+      })
+    }
+    return result
+  }
+
+  render () {
+    let temp = this._renderMeasurement("temperature", "°C")
+    let pressure = this._renderMeasurement("pressure", "hPa")
+    let humidity = this._renderMeasurement("humidity", "%")
 
     return (<div className='sensor'>
         <div className='header'>
           <div className='alias'>{this.props.alias}</div>
         </div>
-        {chartTemp}
-        {chartPressure}
-        {chartHumidity}
-        <LatestMeasurement 
-          temperature={this.props.recent.temperature}
-          humidity={this.props.recent.humidity}
-          pressure={this.props.recent.pressure}
-          alias={this.props.alias}
-          timestamp={this.props.recent.timestamp}/>
+        <div className='summary'>
+          <MeasurementSummary 
+            temperature={temp.summary}
+            humidity={humidity.summary}
+            pressure={pressure.summary}
+            alias={this.props.alias}
+            timestamp={this.props && this.props.latest && this.props.latest.timestamp}/>
+        </div>
+        {temp ? temp.chart : null}
+        {pressure ? pressure.chart : null}
+        {humidity ? humidity.chart : null}
     </div>)
   }
 }

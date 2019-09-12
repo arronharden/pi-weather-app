@@ -4,11 +4,11 @@ import Sensor from '../Sensor'
 
 class Dashboard extends React.Component {
   componentDidMount () {
-    fetch('/measurements/recent')
+    fetch('/measurements/summary')
       .then(response => response.json())
       .then((body) => {
         const bodySorted = body.sort((a, b) => { return a.alias.localeCompare(b.alias) })
-        this.setState({ recent: bodySorted })
+        this.setState({ summary: bodySorted })
       })
       .catch((err) => {
         console.error('Failed to read latest measurements', err)
@@ -16,15 +16,15 @@ class Dashboard extends React.Component {
   }
 
   render () {
-    if (!this.state || !this.state.recent) {
+    if (!this.state || !this.state.summary) {
       // loading overlay
       return (<div>Loading...</div>)
     }
 
     return (<div className='dashboard'>
-      {this.state.recent.map((value, index) => {
+      {this.state.summary.map((value, index) => {
         return <Sensor 
-          recent={value}
+          latest={value.latest}
           alias={value.alias}/>
       })}
     </div>)

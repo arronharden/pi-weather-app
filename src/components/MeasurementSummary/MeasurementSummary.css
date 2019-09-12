@@ -1,0 +1,54 @@
+.measurement-summary {
+  border: solid 1px #666666;
+  border-radius: 5px;
+  padding: 1em;
+  background-color: #bbbbdd;
+  text-align: left;
+}
+
+.measurement-summary > .header {
+  margin-bottom: 1em;
+}
+
+.measurement-summary .title {
+  font-weight: 600;
+}
+
+.measurement-summary .timestamp {
+  font-size: 70%;
+  margin-left: .6em;
+}
+
+.measurement-summary .labels {
+  display: inline-block;
+}
+
+.measurement-summary .icon {
+  margin-right: .6em;
+}
+
+.measurement-summary .label-column {
+  display: inline-block;
+}
+
+.measurement-summary .latest-column {
+  display: inline-block;
+  margin-left: 1.5em;
+  width: 5em;
+}
+
+.measurement-summary .minimum-column {
+  display: inline-block;
+  margin-left: 1.5em;
+  width: 5em;
+}
+
+.measurement-summary .maximum-column {
+  display: inline-block;
+  margin-left: 1.5em;
+  width: 5em;
+}
+
+.measurement-summary .columm-label {
+  font-weight: 500;
+}

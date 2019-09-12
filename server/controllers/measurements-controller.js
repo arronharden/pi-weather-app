@@ -24,24 +24,42 @@ module.exports.getMeasurements = function (req) {
     })
 }
 
-module.exports.getMostRecentMeasurements = function (req) {
+module.exports.getSummaryMeasurements = function (req) {
   if (!req.user || !req.user.scope || !('pi-weather-app.read' in req.user.scope)) {
     // throw Object.assign(new Error('Not authorised to get measurements'), { status: 403 })
   }
-  return postgresClient.readMostRecentData(req.query.alias)
+  return postgresClient.readLatestData(req.query.alias)
     .then((result) => {
       return {
-        body: _mapPostgresResults(result.rows)
+        body: _mapPostgresResults(result.rows).map((latest) => ({
+          alias: latest.alias,
+          latest: {
+            temperature: latest.temperature,
+            pressure: latest.pressure,
+            humidity: latest.humidity,
+            timestamp: latest.timestamp
+          }
+        }))
       }
     })
 }
 
 function _mapPostgresResults(rows) {
+  const mapItem = function(item, name) {
+    if(item.hasOwnProperty(name)) {
+      if(item[name] === null || item[name] === undefined) {
+        delete item[name]
+      }
+      else {
+        item[name] = parseFloat(item[name])
+      }
+    }
+  }
+
   return rows.map((item) => {
-    return Object.assign({}, item, {
-      temperature: (item.temperature ? parseFloat(item.temperature) : null),  
-      humidity: (item.humidity ? parseFloat(item.humidity) : null),
-      pressure: (item.pressure ? parseFloat(item.pressure) : null)
-    })
+    mapItem(item, "temperature")
+    mapItem(item, "humidity")
+    mapItem(item, "pressure")
+    return item
   })
 }

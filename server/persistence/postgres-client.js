@@ -32,8 +32,8 @@ module.exports.readAliases = function () {
   return pool.query(SELECT_ALIASES)
 }
 
-module.exports.readMostRecentData = function (alias) {
-  const SELECT_MOST_RECENT_DATA = `SELECT
+module.exports.readLatestData = function (alias) {
+  const SELECT_LATEST_DATA = `SELECT
     ${appConfig.postgres.tableName}.*
     FROM
       (SELECT
@@ -47,7 +47,7 @@ module.exports.readMostRecentData = function (alias) {
     ON
       ${appConfig.postgres.tableName}.alias = latest_measurements.alias AND
       ${appConfig.postgres.tableName}.timestamp = latest_measurements.timestamp`
-  return pool.query(SELECT_MOST_RECENT_DATA)
+  return pool.query(SELECT_LATEST_DATA)
 }
 
 module.exports.readData = function (fromDate, toDate, alias) {
