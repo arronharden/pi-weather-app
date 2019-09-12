@@ -12,15 +12,15 @@ class MeasurementSummary extends React.Component {
 
   _renderMeasurementRow(labels, latest, min, max, label, name, iconClassName, unitsLabel) {
     if (this.props && this.props[name]) {
-      labels.push((<div className='row'>
+      labels.push((<div className='summary-row'>
         { iconClassName ? (<i className={"icon " + iconClassName}></i>) : null }
-        <span className='label'>{label}</span>
+        <span className='summary-label'>{label}</span>
       </div>))
-      latest.push(<div className='value'>{this._getValue(this.props[name].latest)}{unitsLabel}</div>)
-      min.push(<div className='value'>
+      latest.push(<div className='summary-value'>{this._getValue(this.props[name].latest)}{unitsLabel}</div>)
+      min.push(<div className='summary-value'>
         {this.props[name].hasOwnProperty("minimum") ? this._getValue(this.props[name].minimum) : "N/A"}{unitsLabel}
       </div>)
-      max.push(<div className='value'>
+      max.push(<div className='summary-value'>
         {this.props[name].hasOwnProperty("maximum") ? this._getValue(this.props[name].maximum) : "N/A"}{unitsLabel}
       </div>)
     }
@@ -41,14 +41,28 @@ class MeasurementSummary extends React.Component {
     }
 
     return (<div className='measurement-summary'>
-      <div className='header'>
-        <div className='title'>Current reading</div>
-        <div className='timestamp'> as of {ts}</div>
+      <div className='summary-header'>
+        <div className='summary-title'>
+          <span>Sensor </span> 
+          <span className='summary-alias'>{this.props.alias}</span>
+        </div>
       </div>
-      <div className='label-column'>{labels} </div>
-      <div className='latest-column'><div className='columm-label'>Latest</div>{latest}</div>
-      <div className='minimum-column'><div className='columm-label'>Minimum</div>{min}</div>
-      <div className='maximum-column'><div className='columm-label'>Maximum</div>{max}</div>
+      <div className='summary-label-column'>{labels} </div>
+      <div className='summary-latest-column'>
+        <div className='summary-columm-label'>
+          Latest
+          <div className='summary-latest-timestamp'>{ts}</div>
+        </div>
+        {latest}
+      </div>
+      <div className='summary-minimum-column'>
+        <div className='summary-columm-label'>Minimum</div>
+        {min}
+      </div>
+      <div className='summary-maximum-column'>
+        <div className='summary-columm-label'>Maximum</div>
+        {max}
+      </div>
     </div>)
   }
 }

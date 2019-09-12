@@ -6,17 +6,50 @@
   text-align: left;
 }
 
-.measurement-summary > .header {
+.measurement-summary .summary-header {
   margin-bottom: 1em;
 }
 
-.measurement-summary .title {
+.measurement-summary .summary-header .summary-title {
   font-weight: 600;
 }
 
-.measurement-summary .timestamp {
+.measurement-summary .summary-header .summary-alias {
+  text-transform: capitalize;
+  display: inline-block
+}
+
+.measurement-summary .summary-latest-timestamp {
   font-size: 70%;
   margin-left: .6em;
+}
+
+.measurement-summary .summary-label-column {
+  display: inline-block;
+}
+
+.measurement-summary .summary-latest-column {
+  display: inline-block;
+  padding: 0 1.5em;
+  width: 8em;
+}
+
+.measurement-summary .summary-minimum-column {
+  display: inline-block;
+  border-left: solid 1px;
+  padding: 0 1.5em;
+  width: 5em;
+}
+
+.measurement-summary .summary-maximum-column {
+  display: inline-block;
+  border-left: solid 1px;
+  padding-left: 1.5em;
+  width: 5em;
+}
+
+.measurement-summary .summary-columm-label {
+  font-weight: 500;
 }
 
 .measurement-summary .labels {
@@ -25,30 +58,4 @@
 
 .measurement-summary .icon {
   margin-right: .6em;
-}
-
-.measurement-summary .label-column {
-  display: inline-block;
-}
-
-.measurement-summary .latest-column {
-  display: inline-block;
-  margin-left: 1.5em;
-  width: 5em;
-}
-
-.measurement-summary .minimum-column {
-  display: inline-block;
-  margin-left: 1.5em;
-  width: 5em;
-}
-
-.measurement-summary .maximum-column {
-  display: inline-block;
-  margin-left: 1.5em;
-  width: 5em;
-}
-
-.measurement-summary .columm-label {
-  font-weight: 500;
 }

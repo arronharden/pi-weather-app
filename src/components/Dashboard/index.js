@@ -23,9 +23,9 @@ class Dashboard extends React.Component {
 
     return (<div className='dashboard'>
       {this.state.summary.map((value, index) => {
-        return <Sensor 
-          latest={value.latest}
-          alias={value.alias}/>
+        return (<div className='sensor-container'>
+            <Sensor latest={value.latest} alias={value.alias}/>
+          </div>)
       })}
     </div>)
   }
