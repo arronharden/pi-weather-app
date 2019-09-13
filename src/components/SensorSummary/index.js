@@ -1,7 +1,7 @@
 import React from 'react'
-import './MeasurementSummary.css'
+import './SensorSummary.css'
 
-class MeasurementSummary extends React.Component {
+class SensorSummary extends React.Component {
   _getValue (value) {
     const n = parseFloat(value)
     if (!isNaN(n)) {
@@ -40,7 +40,7 @@ class MeasurementSummary extends React.Component {
       ts = new Date().toLocaleString()
     }
 
-    return (<div className='measurement-summary'>
+    return (<div className='sensor-summary'>
       <div className='summary-header'>
         <div className='summary-title'>
           <span className='summary-alias'>{this.props.alias}</span>
@@ -66,4 +66,4 @@ class MeasurementSummary extends React.Component {
   }
 }
 
-export default MeasurementSummary
+export default SensorSummary

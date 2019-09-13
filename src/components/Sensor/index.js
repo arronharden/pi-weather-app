@@ -1,42 +1,25 @@
 import React from 'react'
 import './Sensor.css'
-import MeasurementSummary from '../MeasurementSummary'
-import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip
-} from 'recharts'
+import SensorChart from '../SensorChart'
+import SensorSummary from '../SensorSummary'
 
 class Sensor extends React.Component {
   componentDidMount () {
-    const to = new Date()
-    const from = new Date(to.getTime() - (24 * 60 * 60 * 1000) - 999999999)
-    fetch(`/measurements?fromDate=${from.toISOString()}&toDate=${to.toISOString()}&alias=${this.props.alias}`)
+    fetch(`/measurements?fromDate=${this.props.fromDate.toISOString()}&toDate=${this.props.toDate.toISOString()}&alias=${this.props.alias}`)
       .then(response => response.json())
       .then((body) => {
         this.setState({ data: body })
       })
   }
 
-  _tickFormat (timeStr) {
-    const d = new Date(timeStr)
-    return d.toLocaleTimeString()
-  }
-
-  _renderMeasurement (name, unitsLabel) {
+  _renderMeasurement (label, name, unitsLabel) {
     const result = {}
     if (this.props && this.props.latest && Object.prototype.hasOwnProperty.call(this.props.latest, name) && this.props.latest[name] !== null) {
       result.summary = Object.assign({}, result.summary, { latest: this.props.latest[name] })
     }
     if (this.state && this.state.data && this.state.data.length > 0 && this.state.data[0][name]) {
       // build chart
-      result.chart = (<div className="chart">
-        <LineChart width={500} height={300} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} data={this.state.data}>
-          <XAxis dataKey="timestamp" tickFormatter={this._tickFormat} />
-          <YAxis label={unitsLabel}/>
-          <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-          <Line type="basis" dataKey={name} stroke="#8884d8" dot={false}/>
-          <Tooltip/>
-        </LineChart>
-      </div>)
+      result.chart = (<SensorChart data={this.state.data} label={label} name={name} unitsLabel={unitsLabel}/>)
       const values = this.state.data.map((item) => item[name])
       result.summary = Object.assign({}, result.summary, {
         minimum: Math.min(...values),
@@ -47,13 +30,13 @@ class Sensor extends React.Component {
   }
 
   render () {
-    const temp = this._renderMeasurement('temperature', '°C')
-    const pressure = this._renderMeasurement('pressure', 'hPa')
-    const humidity = this._renderMeasurement('humidity', '%')
+    const temp = this._renderMeasurement('Temperature', 'temperature', '°C')
+    const pressure = this._renderMeasurement('Pressure', 'pressure', 'hPa')
+    const humidity = this._renderMeasurement('Humidity', 'humidity', '%')
 
     return (<div className='sensor'>
-      <div className='summary'>
-        <MeasurementSummary
+      <div className='summary-container'>
+        <SensorSummary
           temperature={temp.summary}
           humidity={humidity.summary}
           pressure={pressure.summary}

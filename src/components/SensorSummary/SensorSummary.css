@@ -1,65 +1,65 @@
-.measurement-summary {
+.sensor-summary {
   border-radius: 5px;
   padding: 1em;
   text-align: left;
 }
 
-.measurement-summary .summary-header {
+.sensor-summary .summary-header {
   margin-bottom: 1em;
 }
 
-.measurement-summary .summary-header .summary-title {
+.sensor-summary .summary-header .summary-title {
   font-weight: 600;
   font-size: 200%;
 }
 
-.measurement-summary .summary-header .summary-alias {
+.sensor-summary .summary-header .summary-alias {
   text-transform: capitalize;
   display: inline-block
 }
 
-.measurement-summary .summary-latest-timestamp {
+.sensor-summary .summary-latest-timestamp {
   font-size: 70%;
   margin-left: .6em;
 }
 
-.measurement-summary .summary-label-column {
+.sensor-summary .summary-label-column {
   display: inline-block;
 }
 
-.measurement-summary .summary-latest-column {
+.sensor-summary .summary-latest-column {
   display: inline-block;
   padding: 0 1.5em;
   width: 8em;
 }
 
-.measurement-summary .summary-minimum-column {
+.sensor-summary .summary-minimum-column {
   display: inline-block;
   border-left: solid 1px;
   padding: 0 1.5em;
   width: 5em;
 }
 
-.measurement-summary .summary-maximum-column {
+.sensor-summary .summary-maximum-column {
   display: inline-block;
   border-left: solid 1px;
   padding-left: 1.5em;
   width: 5em;
 }
 
-.measurement-summary .summary-column-label {
+.sensor-summary .summary-column-label {
   font-weight: 500;
   margin-bottom: 0.5em;
 }
 
-.measurement-summary .summary-row {
+.sensor-summary .summary-row {
   margin-bottom: 0.2em;
 }
 
-.measurement-summary .summary-value {
+.sensor-summary .summary-value {
   margin-bottom: 0.2em;
 }
 
-.measurement-summary .summary-icon {
+.sensor-summary .summary-icon {
   margin-right: .6em;
 }
