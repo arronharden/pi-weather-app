@@ -13,7 +13,8 @@
     "react-scripts": "3.1.1",
     "recharts": "^1.7.1",
     "request": "^2.88.0",
-    "twitter": "^1.7.1"
+    "twitter": "^1.7.1",
+    "yargs": "^14.0.0"
   },
   "devDependencies": {
     "eslint": "^6.1.0",
@@ -29,10 +30,9 @@
   },
   "scripts": {
     "start": "pm2 start ./ecosystem.config.js",
-    "start_mock": "pm2 start ./ecosystem.config.js --env mock",
-    "start_dev": "run-p start_dev_server start_dev_ui",
-    "start_dev_server": "nodemon bin/www",
-    "start_dev_ui": "react-scripts start",
+    "start:dev": "run-p 'start:dev_server -- {@}' 'start:dev_ui -- {@}' --",
+    "start:dev_server": "nodemon bin/www",
+    "start:dev_ui": "react-scripts start",
     "stop": "pm2 stop pi-weather-app",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -54,6 +54,8 @@
     ]
   },
   "nodemonConfig": {
-    "ignore": ["src/*"]
+    "ignore": [
+      "src/*"
+    ]
   }
 }

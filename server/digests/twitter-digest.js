@@ -8,7 +8,7 @@ let client
 module.exports.init = function () {
   if (!appConfig.twitter) {
     console.warn('No Twitter configuration defined')
-    return
+    return Promise.resolve()
   }
   client = new Twitter({
     consumer_key: appConfig.twitter.consumerKey,

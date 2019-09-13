@@ -7,12 +7,14 @@
 var app = require('../app')
 var debug = require('debug')('pi-weather-app:server')
 var http = require('http')
+const argv = require('yargs').argv
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '8080')
+const PORT_VALUE = (argv.port || process.env.PORT)
+var port = normalizePort(PORT_VALUE || '8080')
 app.set('port', port)
 
 /**

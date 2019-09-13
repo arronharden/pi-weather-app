@@ -1,8 +1,6 @@
 .measurement-summary {
-  border: solid 1px #666666;
   border-radius: 5px;
   padding: 1em;
-  background-color: #bbbbdd;
   text-align: left;
 }
 
@@ -12,6 +10,7 @@
 
 .measurement-summary .summary-header .summary-title {
   font-weight: 600;
+  font-size: 200%;
 }
 
 .measurement-summary .summary-header .summary-alias {
@@ -48,14 +47,19 @@
   width: 5em;
 }
 
-.measurement-summary .summary-columm-label {
+.measurement-summary .summary-column-label {
   font-weight: 500;
+  margin-bottom: 0.5em;
 }
 
-.measurement-summary .labels {
-  display: inline-block;
+.measurement-summary .summary-row {
+  margin-bottom: 0.2em;
 }
 
-.measurement-summary .icon {
+.measurement-summary .summary-value {
+  margin-bottom: 0.2em;
+}
+
+.measurement-summary .summary-icon {
   margin-right: .6em;
 }
