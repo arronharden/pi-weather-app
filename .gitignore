@@ -24,6 +24,7 @@ yarn-error.log*
 
 # app configs
 !server/config/app-config-template.json
+server/config/app-config*.json
 
 # app logs
 pw_app.log
