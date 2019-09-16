@@ -18,7 +18,8 @@
 .dashboard-header .header-right {
     text-align: right;
     float: right;
-    padding-right: 1em;
+    margin-right: 10em;
+    margin-top: 0.3em;
 }
 
 .dashboard-header .header-from,
@@ -34,4 +35,8 @@
 
 .dashboard-header .react-datepicker-wrapper {
     margin-left: 0.6em;
+}
+
+.dashboard-header .react-datepicker-wrapper input {
+    font-size: 1em;
 }

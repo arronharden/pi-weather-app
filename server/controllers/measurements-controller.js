@@ -37,29 +37,29 @@ module.exports.getSummaryMeasurements = function (req) {
             temperature: latest.temperature,
             pressure: latest.pressure,
             humidity: latest.humidity,
-            timestamp: latest.timestamp
+            timestamp: Date.parse(latest.timestamp)
           }
         }))
       }
     })
 }
 
-function _mapPostgresResults(rows) {
-  const mapItem = function(item, name) {
-    if(item.hasOwnProperty(name)) {
-      if(item[name] === null || item[name] === undefined) {
+function _mapPostgresResults (rows) {
+  const mapItem = function (item, name) {
+    if (Object.prototype.hasOwnProperty.call(item, name)) {
+      if (item[name] === null || item[name] === undefined) {
         delete item[name]
-      }
-      else {
+      } else {
         item[name] = parseFloat(item[name])
       }
     }
   }
 
   return rows.map((item) => {
-    mapItem(item, "temperature")
-    mapItem(item, "humidity")
-    mapItem(item, "pressure")
+    mapItem(item, 'temperature')
+    mapItem(item, 'humidity')
+    mapItem(item, 'pressure')
+    item.timestamp = Date.parse(item.timestamp)
     return item
   })
 }
