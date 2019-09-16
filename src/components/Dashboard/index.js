@@ -8,16 +8,13 @@ class Dashboard extends React.Component {
       .then(response => response.json())
       .then((body) => {
         const bodySorted = body.sort((a, b) => { return a.alias.localeCompare(b.alias) })
-
-        const to = new Date()
-        const from = new Date(to.getTime() - (24 * 60 * 60 * 1000) - 999999999)
-        this.setState({ summary: bodySorted, fromDate: from, toDate: to })
+        this.setState({ summary: bodySorted })
       })
       .catch((err) => {
-        console.error('Failed to read latest measurements', err)
+        console.error('Failed to read measurements summary', err)
       })
   }
-
+  
   render () {
     if (!this.state || !this.state.summary) {
       // loading overlay
@@ -27,7 +24,7 @@ class Dashboard extends React.Component {
     return (<div className='dashboard'>
       {this.state.summary.map((value, index) => {
         return (<div className='sensor-container' key={value.alias}>
-          <Sensor latest={value.latest} alias={value.alias} fromDate={this.state.fromDate} toDate={this.state.toDate}/>
+          <Sensor latest={value.latest} alias={value.alias} fromDate={this.props.fromDate} toDate={this.props.toDate}/>
         </div>)
       })}
     </div>)

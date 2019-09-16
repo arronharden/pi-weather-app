@@ -5,6 +5,17 @@ import SensorSummary from '../SensorSummary'
 
 class Sensor extends React.Component {
   componentDidMount () {
+    this.fetchData()
+  }
+  
+  componentDidUpdate (prevProps) {
+    if(this.props.fromDate.getTime() !== prevProps.fromDate.getTime() || this.props.toDate.getTime() !== prevProps.toDate.getTime()) {
+      // date range has changed - refetch
+      this.fetchData()
+    }
+  }
+
+  fetchData () {
     fetch(`/measurements?fromDate=${this.props.fromDate.toISOString()}&toDate=${this.props.toDate.toISOString()}&alias=${this.props.alias}`)
       .then(response => response.json())
       .then((body) => {
@@ -43,9 +54,11 @@ class Sensor extends React.Component {
           alias={this.props.alias}
           timestamp={this.props && this.props.latest && this.props.latest.timestamp}/>
       </div>
-      {temp ? temp.chart : null}
-      {pressure ? pressure.chart : null}
-      {humidity ? humidity.chart : null}
+      <div className='chart-container'>
+        {temp ? temp.chart : null}
+        {pressure ? pressure.chart : null}
+        {humidity ? humidity.chart : null}
+      </div>
     </div>)
   }
 }
