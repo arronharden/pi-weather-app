@@ -3,24 +3,30 @@ import Dashboard from './components/Dashboard'
 import DashboardHeader from './components/DashboardHeader'
 
 class App extends React.Component {
-  state = {
-  }
-  
-  componentDidMount() {
-    const toDate = new Date()
-    const fromDate = new Date(toDate.getTime() - (24 * 60 * 60 * 1000))
-    this.setState({ fromDate: fromDate, toDate: toDate })
-  }
+  state = { rangeType: 'last7days' }
 
   onDateRangeChanged = (dateRange) => {
-    this.setState({ fromDate: dateRange.fromDate, toDate: dateRange.toDate })
+    this.setState({ ...dateRange })
   }
   
   render() {
+    let toDate, fromDate
+    if(this.state.rangeType === 'last7days') {
+      toDate = new Date()
+      fromDate = new Date(toDate.getTime() - (7 * 24 * 60 * 60 * 1000)) // the last 7 days
+    }
+    else if(this.state.rangeType === 'last30days') {
+      toDate = new Date()
+      fromDate = new Date(toDate.getTime() - (30 * 24 * 60 * 60 * 1000)) // the last 30 days
+    }
+    else  {
+      toDate = this.toDate
+      fromDate = this.state.fromDate
+    }
     return (
       <div className="app">
-        <DashboardHeader fromDate={this.state.fromDate} toDate={this.state.toDate} onDateRangeChanged={this.onDateRangeChanged}></DashboardHeader>
-        <Dashboard fromDate={this.state.fromDate} toDate={this.state.toDate}/>
+        <DashboardHeader rangeType={this.state.rangeType} fromDate={fromDate} toDate={toDate} onDateRangeChanged={this.onDateRangeChanged}></DashboardHeader>
+        <Dashboard fromDate={fromDate} toDate={toDate}/>
       </div>
     )
   }
