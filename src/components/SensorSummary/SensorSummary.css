@@ -1,0 +1,65 @@
+.sensor-summary {
+  border-radius: 5px;
+  padding: 1em;
+  text-align: left;
+}
+
+.sensor-summary .summary-header {
+  margin-bottom: 1em;
+}
+
+.sensor-summary .summary-header .summary-title {
+  font-weight: 600;
+  font-size: 200%;
+}
+
+.sensor-summary .summary-header .summary-alias {
+  text-transform: capitalize;
+  display: inline-block
+}
+
+.sensor-summary .summary-latest-timestamp {
+  font-size: 70%;
+  margin-left: .6em;
+}
+
+.sensor-summary .summary-label-column {
+  display: inline-block;
+}
+
+.sensor-summary .summary-latest-column {
+  display: inline-block;
+  padding: 0 1.5em;
+  width: 8em;
+}
+
+.sensor-summary .summary-minimum-column {
+  display: inline-block;
+  border-left: solid 1px;
+  padding: 0 1.5em;
+  width: 5em;
+}
+
+.sensor-summary .summary-maximum-column {
+  display: inline-block;
+  border-left: solid 1px;
+  padding-left: 1.5em;
+  width: 5em;
+}
+
+.sensor-summary .summary-column-label {
+  font-weight: 500;
+  margin-bottom: 0.5em;
+}
+
+.sensor-summary .summary-row {
+  margin-bottom: 0.2em;
+}
+
+.sensor-summary .summary-value {
+  margin-bottom: 0.2em;
+}
+
+.sensor-summary .summary-icon {
+  margin-right: .6em;
+}

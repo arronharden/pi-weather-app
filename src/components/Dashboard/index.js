@@ -8,7 +8,10 @@ class Dashboard extends React.Component {
       .then(response => response.json())
       .then((body) => {
         const bodySorted = body.sort((a, b) => { return a.alias.localeCompare(b.alias) })
-        this.setState({ summary: bodySorted })
+
+        const to = new Date()
+        const from = new Date(to.getTime() - (24 * 60 * 60 * 1000) - 999999999)
+        this.setState({ summary: bodySorted, fromDate: from, toDate: to })
       })
       .catch((err) => {
         console.error('Failed to read latest measurements', err)
@@ -23,9 +26,9 @@ class Dashboard extends React.Component {
 
     return (<div className='dashboard'>
       {this.state.summary.map((value, index) => {
-        return (<div className='sensor-container'>
-            <Sensor latest={value.latest} alias={value.alias}/>
-          </div>)
+        return (<div className='sensor-container' key={value.alias}>
+          <Sensor latest={value.latest} alias={value.alias} fromDate={this.state.fromDate} toDate={this.state.toDate}/>
+        </div>)
       })}
     </div>)
   }

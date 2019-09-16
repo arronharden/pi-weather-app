@@ -1,14 +1,5 @@
 
-.sensor > .header {
-  text-align: center;
-  display: block;
-  margin-bottom: 1em;
-  text-transform: capitalize;
-}
-
-.sensor .alias {
-  font-size: 200%;
-  font-weight: 600;
+.sensor {
 }
 
 .sensor .chart {
@@ -16,10 +7,7 @@
   margin-left: 1em;
 }
 
-.sensor .summary {
-  text-align: center;
-}
-
-.sensor .summary .measurement-summary {
+.sensor .summary-container .sensor-summary {
   display: inline-block;
+  margin-bottom: 1em;
 }
