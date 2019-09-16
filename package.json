@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "pm2 start ./ecosystem.config.js",
-    "start:dev": "run-p 'start:dev_server -- {@}' 'start:dev_ui -- {@}' --",
+    "start:dev": "run-p \"start:dev_server -- {@}\" \"start:dev_ui -- {@}\" --",
     "start:dev_server": "nodemon bin/www",
     "start:dev_ui": "react-scripts start",
     "stop": "pm2 stop pi-weather-app",
