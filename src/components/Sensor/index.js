@@ -1,81 +1,64 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import './Sensor.css'
-import LatestMeasurement from '../LatestMeasurement'
-import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-} from 'recharts';
-
+import SensorChart from '../SensorChart'
+import SensorSummary from '../SensorSummary'
 
 class Sensor extends React.Component {
   componentDidMount () {
-    const to = new Date()
-    const from = new Date(to.getTime() - (24 * 60 * 60 * 1000))
-    fetch(`/measurements?fromDate=${from.toISOString()}&toDate=${to.toISOString()}&alias=${this.props.alias}`)
+    this.fetchData()
+  }
+
+  componentDidUpdate (prevProps) {
+    if (this.props.fromDate.getTime() !== prevProps.fromDate.getTime() || this.props.toDate.getTime() !== prevProps.toDate.getTime()) {
+      // date range has changed - refetch
+      this.fetchData()
+    }
+  }
+
+  fetchData () {
+    fetch(`/measurements?fromDate=${this.props.fromDate.toISOString()}&toDate=${this.props.toDate.toISOString()}&alias=${this.props.alias}`)
       .then(response => response.json())
       .then((body) => {
-          this.setState({ data: body })
+        this.setState({ data: body })
       })
   }
-  
-  _tickFormat(timeStr) {
-    const d = new Date(timeStr)
-    return d.toLocaleTimeString()
+
+  _renderMeasurement (label, name, unitsLabel) {
+    const result = {}
+    if (this.props && this.props.latest && Object.prototype.hasOwnProperty.call(this.props.latest, name) && this.props.latest[name] !== null) {
+      result.summary = Object.assign({}, result.summary, { latest: this.props.latest[name] })
+    }
+    if (this.state && this.state.data && this.state.data.length > 0 && this.state.data[0][name]) {
+      // build chart
+      result.chart = (<SensorChart data={this.state.data} label={label} name={name} unitsLabel={unitsLabel} fromDate={this.props.fromDate} toDate={this.props.toDate}/>)
+      const values = this.state.data.map((item) => item[name]).filter((item) => !isNaN(item))
+      result.summary = Object.assign({}, result.summary, {
+        minimum: Math.min(...values),
+        maximum: Math.max(...values)
+      })
+    }
+    return result
   }
 
   render () {
-    let chartTemp, chartPressure, chartHumidity;
-    if(this.state && this.state.data && this.state.data.length > 0) {
-      if(this.state.data[0].temperature) {
-        // temp chart
-        chartTemp = (<div className="chart">
-          <LineChart width={500} height={300} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} data={this.state.data}>
-            <XAxis dataKey="timestamp" tickFormatter={this._tickFormat} />
-            <YAxis label="°C"/>
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-            <Line type="basis" dataKey="temperature" stroke="#8884d8" dot={false}/>
-            <Tooltip/>
-          </LineChart>
-        </div>)
-      }
-      if(this.state.data[0].pressure) {
-        // pressure chart
-        chartPressure = (<div className="chart">
-          <LineChart width={500} height={300} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} data={this.state.data}>
-            <XAxis dataKey="timestamp" tickFormatter={this._tickFormat} />
-            <YAxis label="hPa"/>
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-            <Line type="basis" dataKey="pressure" stroke="#8884d8" dot={false}/>
-            <Tooltip/>
-          </LineChart>
-        </div>)
-      }
-      if(this.state.data[0].humidity) {
-        // humidity chart
-        chartHumidity = (<div className="chart">
-          <LineChart width={500} height={300} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} data={this.state.data}>
-            <XAxis dataKey="timestamp" tickFormatter={this._tickFormat} />
-            <YAxis label="%" domain={[0, 100]}/>
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-            <Line type="basis" dataKey="humidity" stroke="#8884d8" dot={false}/>
-            <Tooltip/>
-          </LineChart>
-        </div>)
-      }
-    }
+    const temp = this._renderMeasurement('Temperature', 'temperature', '°C')
+    const pressure = this._renderMeasurement('Pressure', 'pressure', 'hPa')
+    const humidity = this._renderMeasurement('Humidity', 'humidity', '%')
 
     return (<div className='sensor'>
-        <div className='header'>
-          <div className='alias'>{this.props.alias}</div>
-        </div>
-        {chartTemp}
-        {chartPressure}
-        {chartHumidity}
-        <LatestMeasurement 
-          temperature={this.props.recent.temperature}
-          humidity={this.props.recent.humidity}
-          pressure={this.props.recent.pressure}
+      <div className='summary-container'>
+        <SensorSummary
+          temperature={temp.summary}
+          humidity={humidity.summary}
+          pressure={pressure.summary}
           alias={this.props.alias}
-          timestamp={this.props.recent.timestamp}/>
+          timestamp={this.props && this.props.latest && this.props.latest.timestamp}/>
+      </div>
+      <div className='chart-container'>
+        {temp ? temp.chart : null}
+        {pressure ? pressure.chart : null}
+        {humidity ? humidity.chart : null}
+      </div>
     </div>)
   }
 }

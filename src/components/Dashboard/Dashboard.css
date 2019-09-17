@@ -1,2 +1,7 @@
-.Dashboard {
+.dashboard {
+    margin: 2em;
+}
+
+.dashboard .sensor-container {
+    margin-bottom: 6em;
 }

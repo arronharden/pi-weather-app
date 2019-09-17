@@ -1,0 +1,54 @@
+.dashboard-header {
+    width: 100%;
+    min-height: 2em;
+    background-color: #444488;
+    color: #f6f2f2;
+    padding: 1em 0;
+}
+
+.dashboard-header .header-title {
+    display: inline-block;
+    margin-left: 2em;
+}
+
+.dashboard-header .header-title h2 {
+    margin: 0;
+}
+
+.dashboard-header .header-right {
+    text-align: right;
+    float: right;
+    margin-right: 10em;
+    margin-top: 0.3em;
+}
+
+.dashboard-header .header-from,
+.dashboard-header .header-to {
+    display: inline-block;
+    margin-left: 2em;
+}
+
+.dashboard-header .header-from > *, 
+.dashboard-header .header-to > * {
+    display: inline-block;
+}
+
+.dashboard-header .react-datepicker-wrapper {
+    margin-left: 0.6em;
+}
+
+.dashboard-header .react-datepicker-wrapper input {
+    font-size: 1em;
+}
+
+
+@media (max-width: 576px) {
+    .dashboard-header .header-title h2 {
+        font-size: 120%;
+    }
+    .dashboard-header .header-right {
+        text-align: left;
+        float: none;
+        margin: 0.5em 0 0 2em;
+    }
+}

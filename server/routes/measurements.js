@@ -6,8 +6,8 @@ var measurementsControllers = require('../controllers/measurements-controller')
 router.get('/', function (req, res, next) {
   _invokeController(measurementsControllers.getMeasurements, req, res)
 })
-router.get('/recent', function (req, res, next) {
-  _invokeController(measurementsControllers.getMostRecentMeasurements, req, res)
+router.get('/summary', function (req, res, next) {
+  _invokeController(measurementsControllers.getSummaryMeasurements, req, res)
 })
 router.get('/aliases', function (req, res, next) {
   _invokeController(measurementsControllers.getAliases, req, res)

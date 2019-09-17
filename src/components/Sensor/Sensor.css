@@ -1,14 +1,28 @@
 
-.sensor .header {
-  display: block;
-  margin-bottom: 1em;
+.sensor .chart-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 1em;
 }
 
-.sensor .alias {
-  font-weight: 600;
+.sensor .summary-container {
+  overflow: hidden;
 }
 
-.sensor .chart {
+.sensor .summary-container .sensor-summary {
   display: inline-block;
-  margin-left: 1em;
+  margin-bottom: 2em;
+}
+
+.sensor .sensor-chart {
+  padding-right: 2em;
+}
+
+@media (max-width: 1023px) {
+  .sensor .chart-container {
+    grid-template-columns: 1fr;
+  }
+  .sensor .sensor-chart {
+    padding-right: 1em;
+  }
 }

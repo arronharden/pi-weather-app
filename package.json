@@ -4,18 +4,22 @@
   "private": true,
   "proxy": "http://localhost:8080",
   "dependencies": {
+    "babel-eslint": "^10.0.2",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "jwk-to-pem": "^2.0.1",
     "pg": "^7.12.1",
     "react": "^16.9.0",
+    "react-datepicker": "^2.9.6",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1",
     "recharts": "^1.7.1",
     "request": "^2.88.0",
-    "twitter": "^1.7.1"
+    "twitter": "^1.7.1",
+    "yargs": "^14.0.0"
   },
   "devDependencies": {
+    "babel-eslint": "10.0.2",
     "eslint": "^6.1.0",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-import": "^2.18.2",
@@ -29,10 +33,9 @@
   },
   "scripts": {
     "start": "pm2 start ./ecosystem.config.js",
-    "start_mock": "pm2 start ./ecosystem.config.js --env mock",
-    "start_dev": "run-p start_dev_server start_dev_ui",
-    "start_dev_server": "nodemon bin/www",
-    "start_dev_ui": "react-scripts start",
+    "start:dev": "run-p \"start:dev_server -- {@}\" \"start:dev_ui -- {@}\" --",
+    "start:dev_server": "nodemon bin/www",
+    "start:dev_ui": "react-scripts start",
     "stop": "pm2 stop pi-weather-app",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -54,6 +57,8 @@
     ]
   },
   "nodemonConfig": {
-    "ignore": ["src/*"]
+    "ignore": [
+      "src/*"
+    ]
   }
 }
