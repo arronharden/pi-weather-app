@@ -2,6 +2,7 @@ var express = require('express')
 var path = require('path')
 
 var measurementsRouter = require('./server/routes/measurements')
+var ssrRouter = require('./server/routes/ssr')
 // var cognitoAuth = require('./server//lib/cognito-auth')
 var postgresClient = require('./server/persistence/postgres-client')
 const twitterDigest = require('./server/digests/twitter-digest')
@@ -23,6 +24,7 @@ var app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use('/', ssrRouter)
 app.use(express.static(path.join(__dirname, 'build')))
 
 // const cognitoAuthMiddleware = cognitoAuth.getVerifyMiddleware()

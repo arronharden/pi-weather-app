@@ -19,7 +19,13 @@
     "yargs": "^14.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/node": "^7.6.1",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
     "babel-eslint": "10.0.2",
+    "babel-plugin-react-css-modules": "^5.2.6",
     "eslint": "^6.1.0",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-import": "^2.18.2",
@@ -32,9 +38,9 @@
     "pm2": "^3.5.1"
   },
   "scripts": {
-    "start": "pm2 start ./ecosystem.config.js",
+    "start": "pm2 start --interpreter babel-node ./ecosystem.config.js",
     "start:dev": "run-p \"start:dev_server -- {@}\" \"start:dev_ui -- {@}\" --",
-    "start:dev_server": "nodemon bin/www",
+    "start:dev_server": "nodemon --exec babel-node bin/www",
     "start:dev_ui": "react-scripts start",
     "stop": "pm2 stop pi-weather-app",
     "build": "react-scripts build",
