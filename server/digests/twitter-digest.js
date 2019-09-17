@@ -22,7 +22,7 @@ module.exports.init = function () {
 
 function _sendDigest () {
   // Get the data
-  postgresClient.readMostRecentData().then((data) => {
+  postgresClient.readLatestData().then((data) => {
     // tweet it
     let content = ''
     data.rows.forEach(row => {
