@@ -36,23 +36,19 @@ class SensorChart extends React.Component {
   }
 
   render () {
-    let yAxisLabelOffset = null
-    let chartMarginLeft =  null
     let yAxisDomain = [0, 'auto']
     if (this.props.name === 'pressure' ) {
       yAxisDomain = [dataMin => (Math.floor(dataMin / 25) - 1) * 25, dataMin => (Math.ceil(dataMin / 25) + 1) * 25]
-      yAxisLabelOffset =-20
-      chartMarginLeft = 40
     } 
     else if (this.props.name === 'humidity' ) {
       yAxisDomain = [0, 100]
     }
     return (<div className="sensor-chart">
-      <div className="chart-label">{this.props.label}</div>
+      <div className="chart-label">{this.props.label} ({this.props.unitsLabel})</div>
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart margin={{ left: chartMarginLeft, bottom: 30, top: 5 }} data={this.props.data}>
+        <LineChart margin={{ left: -10, bottom: 30, top: 5 }} data={this.props.data}>
           <XAxis scale="time" dataKey="timestamp" tick={<CustomizedAxisTick/>} type="number" domain={[this.props.fromDate.getTime(), this.props.toDate.getTime()]} />
-          <YAxis label={{ value: this.props.unitsLabel, position: 'insideLeft', offset: yAxisLabelOffset }} domain={yAxisDomain}/>
+          <YAxis domain={yAxisDomain}/>
           <CartesianGrid stroke="#d6d6d6" strokeDasharray="5 5"/>
           <Line type="basis" dataKey={this.props.name} stroke="#8884d8" dot={false}/>
           <Tooltip labelFormatter={this._xAxisFormatter} formatter={this._tooltipFormatter}/>

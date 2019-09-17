@@ -5,6 +5,10 @@
   row-gap: 1em;
 }
 
+.sensor .summary-container {
+  overflow: hidden;
+}
+
 .sensor .summary-container .sensor-summary {
   display: inline-block;
   margin-bottom: 2em;
@@ -17,5 +21,8 @@
 @media (max-width: 1023px) {
   .sensor .chart-container {
     grid-template-columns: 1fr;
+  }
+  .sensor .sensor-chart {
+    padding-right: 1em;
   }
 }

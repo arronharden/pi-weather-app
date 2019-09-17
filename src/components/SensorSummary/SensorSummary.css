@@ -1,6 +1,7 @@
 .sensor-summary {
   border-radius: 5px;
   text-align: left;
+  white-space: nowrap;
 }
 
 .sensor-summary .summary-header {
@@ -26,20 +27,25 @@
   display: inline-block;
 }
 
-.sensor-summary .summary-latest-column {
+.sensor-summary .summary-latest-column-lg {
   display: inline-block;
   padding: 0 1.5em;
   width: 8em;
 }
 
-.sensor-summary .summary-minimum-column {
+.sensor-summary .summary-latest-column-sm {
+  display: inline-block;
+  padding: 0 0 0 1.5em;
+}
+
+.sensor-summary .summary-minimum-column-lg {
   display: inline-block;
   border-left: solid 1px;
   padding: 0 1.5em;
   width: 5em;
 }
 
-.sensor-summary .summary-maximum-column {
+.sensor-summary .summary-maximum-column-lg {
   display: inline-block;
   border-left: solid 1px;
   padding-left: 1.5em;
@@ -61,4 +67,15 @@
 
 .sensor-summary .summary-icon {
   margin-right: .6em;
+}
+
+@media (max-width: 1023px) {
+  .sensor-summary .summary-latest-column-lg,
+  .sensor-summary .summary-minimum-column-lg,
+  .sensor-summary .summary-maximum-column-lg {
+    display: none;
+  }
+  .sensor-summary .summary-latest-column-sm {
+    display: inline-block;
+  }
 }

@@ -31,7 +31,7 @@ class Sensor extends React.Component {
     if (this.state && this.state.data && this.state.data.length > 0 && this.state.data[0][name]) {
       // build chart
       result.chart = (<SensorChart data={this.state.data} label={label} name={name} unitsLabel={unitsLabel} fromDate={this.props.fromDate} toDate={this.props.toDate}/>)
-      const values = this.state.data.map((item) => item[name])
+      const values = this.state.data.map((item) => item[name]).filter((item) => !isNaN(item))
       result.summary = Object.assign({}, result.summary, {
         minimum: Math.min(...values),
         maximum: Math.max(...values)
