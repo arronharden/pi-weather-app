@@ -63,7 +63,7 @@ class DashboardHeader extends React.Component {
 
     return (<div className='dashboard-header'>
       <div className='header-title'>
-        <h2>Arron's Weather Station Dashboard</h2>
+        <h2>Weather Station Dashboard</h2>
       </div>
       <div className='header-right'>
         <select value={this.props.rangeType} onChange={this.handleTypeChange}>

@@ -20,16 +20,25 @@ module.exports.init = function () {
   return Promise.resolve()
 }
 
+function _toTitleCase(str) {
+  return str.replace(
+      /([^\W_]+[^\s-]*) */g,
+      function(txt) {
+          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+  );
+}
 function _sendDigest () {
   // Get the data
   postgresClient.readLatestData().then((data) => {
     // tweet it
     let content = ''
-    data.rows.forEach(row => {
-      const t = (row.temperature !== null ? parseFloat(row.temperature).toFixed(2) + 'C' : 'n/a')
-      const h = (row.humidity !== null ? parseFloat(row.humidity).toFixed(2) + '%' : 'n/a')
-      const p = (row.pressure !== null ? parseFloat(row.pressure).toFixed(2) + 'hPa' : 'n/a')
-      content += `\n${row.alias} temp=${t} h=${h} p=${p}`
+    const rowsSorted = data.rows.sort((a, b) => { return a.alias.localeCompare(b.alias) })
+    rowsSorted.forEach(row => {
+      const t = (row.temperature !== null ? ` temp=${parseFloat(row.temperature).toFixed(2)}C`: '')
+      const h = (row.humidity !== null ? ` h=${parseFloat(row.humidity).toFixed(2)}%` : '')
+      const p = (row.pressure !== null ? ` p=${parseFloat(row.pressure).toFixed(0)}hPa` : '')
+      content += `\n${_toTitleCase(row.alias)}:${t}${h}${p}`
     })
     client.post('statuses/update', { status: content }, function (err, tweet, response) {
       setTimeout(_sendDigest, DIGEST_PERIOD)
