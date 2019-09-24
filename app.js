@@ -2,7 +2,6 @@ var express = require('express')
 var path = require('path')
 
 var measurementsRouter = require('./server/routes/measurements')
-// var cognitoAuth = require('./server//lib/cognito-auth')
 var postgresClient = require('./server/persistence/postgres-client')
 const twitterDigest = require('./server/digests/twitter-digest')
 
