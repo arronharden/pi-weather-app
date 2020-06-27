@@ -3,7 +3,7 @@ import Dashboard from './components/Dashboard'
 import DashboardHeader from './components/DashboardHeader'
 
 class App extends React.Component {
-  state = { rangeType: 'last7days' }
+  state = { rangeType: 'last24hours' }
 
   onDateRangeChanged = (dateRange) => {
     this.setState({ ...dateRange })
@@ -11,13 +11,21 @@ class App extends React.Component {
   
   render() {
     let toDate, fromDate
-    if(this.state.rangeType === 'last7days') {
+    if(this.state.rangeType === 'last24hours') {
+      toDate = new Date()
+      fromDate = new Date(toDate.getTime() - (1 * 24 * 60 * 60 * 1000)) // the last 24 hours
+    }
+    else if(this.state.rangeType === 'last7days') {
       toDate = new Date()
       fromDate = new Date(toDate.getTime() - (7 * 24 * 60 * 60 * 1000)) // the last 7 days
     }
     else if(this.state.rangeType === 'last30days') {
       toDate = new Date()
       fromDate = new Date(toDate.getTime() - (30 * 24 * 60 * 60 * 1000)) // the last 30 days
+    }
+    else if(this.state.rangeType === 'last90days') {
+      toDate = new Date()
+      fromDate = new Date(toDate.getTime() - (90 * 24 * 60 * 60 * 1000)) // the last 90 days
     }
     else  {
       toDate = this.toDate
