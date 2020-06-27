@@ -67,8 +67,10 @@ class DashboardHeader extends React.Component {
       </div>
       <div className='header-right'>
         <select value={this.props.rangeType} onChange={this.handleTypeChange}>
+          <option value="last24hours">Last 24 hours</option>
           <option value="last7days">Last 7 days</option>
           <option value="last30days">Last 30 days</option>
+          <option value="last90days">Last 90 days</option>
           <option value="custom">Custom</option>
         </select>
         {customRange}
